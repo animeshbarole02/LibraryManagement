@@ -11,36 +11,29 @@ public class Issuance {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private Users user;
+    @Column(name = "user_id")
+    private Long user;
 
-    @ManyToOne
-    @JoinColumn(name = "book_id", referencedColumnName = "id")
-    private Books book;
 
-    @Column(name = "issued_at", nullable = false)
+    @Column(name = "book_id")
+    private Long book;
+
+    @Column(name = "issue_at")
     private Timestamp issuedAt;
 
-    @Column(name = "returned_at")
+    @Column(name = "return_at")
     private Timestamp returnedAt;
 
-    @Column(name = "status", nullable = false, length = 10)
-    @Enumerated(EnumType.STRING)
-    private Status status;
 
-    @Column(name = "issuance_type", nullable = false, length = 10)
-    @Enumerated(EnumType.STRING)
-    private IssuanceType issuanceType;
+
+    private String status;
+
+    @Column(name = "issuance_type")
+
+    private String issuanceType;
 
     // Getters and Setters
 
-    public enum Status {
-        ISSUED, RETURNED
-    }
 
-    public enum IssuanceType {
-        HOME, LIBRARY
-    }
 
 }

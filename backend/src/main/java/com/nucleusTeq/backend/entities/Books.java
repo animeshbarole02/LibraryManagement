@@ -1,27 +1,30 @@
 package com.nucleusTeq.backend.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "Books")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Books {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "title", nullable = false, length = 255)
     private String title;
 
-    @Column(name = "author", nullable = false, length = 255)
     private String author;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id", referencedColumnName = "id")
-    private Category category;
 
-    @Column(name = "quantity", nullable = false)
-    private Boolean quantity;
+    @Column(name = "category_id")
+    private Long categoryId;
+
+    private Integer quantity;
 
     // Getters and Setters
 }
