@@ -27,7 +27,7 @@ const Navbar = () => {
               
 
               <div className="type">
-                Dashboard
+                  Dashboard
               </div>
 
                <div className="user-name">

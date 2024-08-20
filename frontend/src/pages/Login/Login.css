@@ -44,28 +44,35 @@
 
 }
 
-.button-div .toggle-btn {
+.choose .toggle-btn {
     flex: 1;
     padding: 10px;
-    border: 1px solid #ccc;
+  
     background-color: #f5f5f5;
     color: #333;
-    cursor: pointer;
+    
     text-align: center;
-    transition: background-color 0.3s ease;
+    
+    border: none; /* No border for a clean look */
+    border-radius: 5px; /* Rounded corners */
+    font-weight: 600; /* Slightly bold text */
+    font-size: 16px; /* Moderate font size */
+    cursor: pointer;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
 }
 
-.button-div .toggle-btn:not(:last-child) {
+.choose .toggle-btn:not(:last-child) {
     margin-right: 10px;
 }
 
-.button-div .toggle-btn.active {
+.choose .toggle-btn.active {
     background-color: #d6670c; /* Active button background */
     color: #fff;
     border-color: #ffbb70; /* Active button border */
 }
 
-.button-div .toggle-btn:hover {
+.choose .toggle-btn:hover {
     background-color: #C63D2F;
     color: #ffffff; /* Hover effect */
 }

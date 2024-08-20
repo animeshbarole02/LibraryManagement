@@ -49,13 +49,48 @@
 
 .header {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     width: 80vw;
-    justify-content: space-around;
-    
+    padding: 10px 2%; /* Adds some padding on the left and right for spacing */
 }
 
-.header .user-name {
 
+.header .type {
+    font-size: 35px;
+    padding: 8px;
+    font-weight: 900;
+    margin-left: 1%;
+    flex-grow: 1; 
+}
+
+
+.header .user-name {
+    margin: 1% 2% 0 1%; 
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Logout Button Section */
+.header .logout-button {
+    margin-right: 2%; /* Margin to the right side for spacing */
+    margin-left: auto; /* Pushes the button to the right side */
+}
+
+.header .logout-button button {
+    width: 10vw;
+    padding: 8px; /* Adds some padding for the button */
+    font-weight: bold; /* Makes the text inside the button bold */
+    border: none;
+    background-color: #ffa411; /* Background color for the button */
+    color: white; /* Text color inside the button */
+    cursor: pointer; /* Changes cursor to pointer on hover */
+    border-radius: 5px; /* Rounds the button corners */
+    transition: background-color 0.3s ease; /* Smooth background color transition on hover */
+}
+
+.header .logout-button button:hover {
+    background-color: #ffbb70; /* Lighter shade on hover */
 }
