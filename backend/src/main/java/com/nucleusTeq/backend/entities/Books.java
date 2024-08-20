@@ -26,5 +26,7 @@ public class Books {
 
     private Integer quantity;
 
+    private  String imageurl;
+
     // Getters and Setters
 }

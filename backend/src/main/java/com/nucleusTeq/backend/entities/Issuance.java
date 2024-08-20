@@ -1,10 +1,17 @@
 package com.nucleusTeq.backend.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.sql.Timestamp;
 
 @Entity
 @Table(name = "Issuances")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Issuance {
 
     @Id
@@ -12,11 +19,11 @@ public class Issuance {
     private Long id;
 
     @Column(name = "user_id")
-    private Long user;
+    private Long userId;
 
 
     @Column(name = "book_id")
-    private Long book;
+    private Long bookId;
 
     @Column(name = "issue_at")
     private Timestamp issuedAt;

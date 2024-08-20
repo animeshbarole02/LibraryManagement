@@ -21,7 +21,9 @@ public class BooksDTO {
     @NotNull(message = "CategoryID name cannot be Empty")
     private Long categoryId;
 
-    private Integer quantity ;
+    private Integer quantity;
+
+    private  String imageurl;
 
 
 }
