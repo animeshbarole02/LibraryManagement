@@ -52,7 +52,7 @@
     justify-content: space-between;
     align-items: center;
     width: 80vw;
-    padding: 10px 2%; /* Adds some padding on the left and right for spacing */
+    padding: 12px 2%; /* Adds some padding on the left and right for spacing */
 }
 
 
@@ -81,7 +81,7 @@
 
 .header .logout-button button {
     width: 10vw;
-    padding: 8px; /* Adds some padding for the button */
+    padding: 10px; /* Adds some padding for the button */
     font-weight: bold; /* Makes the text inside the button bold */
     border: none;
     background-color: #ffa411; /* Background color for the button */
@@ -93,4 +93,12 @@
 
 .header .logout-button button:hover {
     background-color: #ffbb70; /* Lighter shade on hover */
+}
+
+.header .user-name img {
+    height: 4vh;
+    margin-right: 1rem;
+
+    
+    
 }

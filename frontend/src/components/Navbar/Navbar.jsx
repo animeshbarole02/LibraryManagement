@@ -1,5 +1,6 @@
 
 import Logo from '../../assets/icons/R.png';
+import User from '../../assets/icons/user.png'
 import './Navbar.css'
 
 const Navbar = () => {
@@ -31,10 +32,12 @@ const Navbar = () => {
               </div>
 
                <div className="user-name">
+                    
+                     <img src={User} alt=''></img>
                      <p>Welcome Animesh !</p><br></br>
 
                </div>
-
+    
 
                <div className="logout-button">
                     <button>Logout</button>
