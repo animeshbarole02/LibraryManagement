@@ -3,6 +3,7 @@ import { useState } from 'react'
 
  import LibraryLogo from '../../assets/icons/WithoutBorder.png'
 import './Login.css'
+import Button from '../../components/Button/Button'
 const Login = () => {
    
  const[isAdmin , setIsAdmin] = useState(true);
@@ -29,15 +30,17 @@ const Login = () => {
 
             </div>
 
-            <div className='choose button-div' >
-                     <button
-                     className={`toggle-btn  ${isAdmin ? 'active': ''}`}
-                     onClick={()=>handleUserTypeChange('ADMIN')}
-                     >Admin</button>
-                     <button
-                     className={`toggle-btn ${!isAdmin ?'active' : ''}`}
-                     onClick={()=> handleUserTypeChange('USER')}
-                     >User</button>
+            <div className='choose' >
+            <Button
+                text="Admin"
+                active={isAdmin}
+                onClick={() => handleUserTypeChange('ADMIN')}
+              />
+              <Button
+                text="User"
+                active={!isAdmin}
+                onClick={() => handleUserTypeChange('USER')}
+              />
             </div>
 
             <div className="form">
@@ -59,7 +62,12 @@ const Login = () => {
                     <input type="password" id="password" name="password" placeholder="Enter your password" />
                 </div>
                 <div className="form-group button-div">
-                    <button type="submit">Log In</button>
+
+                  <Button 
+                  text = "Login"
+                  className="login-btn"
+                  />
+                    
                 </div>
             </form>
 

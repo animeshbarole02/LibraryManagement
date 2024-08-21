@@ -1,0 +1,31 @@
+.sideBar-div{
+
+    width: 20vw;
+    height: 85vh;
+  
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5%;
+    position: fixed;
+
+}
+
+.item {
+    padding: 10px;
+   
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.item img {
+    height: 5vh;
+    margin-right: 10%;
+}
+
+.item .item-button {
+    width: 10vw;
+    padding: 8px;
+}

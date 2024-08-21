@@ -1,0 +1,24 @@
+
+
+.dashboard-div {
+    height: 100vh;
+}
+
+.cards-div {
+     margin-top: 2%;
+     margin-left: 25%;
+     display: grid;
+     grid-template-columns: auto auto;
+     align-items: center;
+     justify-self: center;
+     margin-right: 10%;
+     place-self: center;
+
+
+}
+
+.card-div {
+    place-self: center;
+    margin:10%;
+    
+}

@@ -1,37 +1,38 @@
-import './SideBar.css'
-import Logo from '../../assets/icons/R.png';
+import './SideBar.css';
+
+import Dash from '../../assets/icons/dashboard.png';
+import List from '../../assets/icons/list.png';
+import Book from '../../assets/icons/book.png';
+import Group from '../../assets/icons/group.png';
 
 const SideBar = () => {
   return (
-    <div className='SideBar-div'>
+    <div className='sideBar-div'>
+      <div className="dashboard item">
+        <img src={Dash} alt="Dashboard Icon" className="icon" />
+        <button className="item-button">Dashboard</button>
+      </div>
 
-        <div className="logo">
-            <div className="logo-img">
-            <img src={Logo} alt="logo-img" />
+      <div className="categories item">
+        <img src={List} alt="Categories Icon" className="icon" />
+        <button className="item-button">Categories</button>
+      </div>
 
-            </div>
-            <div className="logo-txt">
-             <p>eadify</p>
-            </div>
-        </div>
+      <div className="books item">
+        <img src={Book} alt="Books Icon" className="icon" />
+        <button className="item-button">Books</button>
+      </div>
 
-        <div className="dashboard">
-
-        </div>
-
-        <div className="categories">
-
-        </div>
-
-        <div className="books">
-
-        </div>
-        <div className="Users">
-
-        </div>
-
+      <div className="users item">
+        <img src={Group} alt="Users Icon" className="icon" />
+        <button className="item-button">Users</button>
+      </div>
+      <div className="users item">
+        <img src={'/'} alt="Users Icon" className="icon" />
+        <button className="item-button">Issuances</button>
+      </div>
     </div>
   )
 }
 
-export default SideBar
+export default SideBar;

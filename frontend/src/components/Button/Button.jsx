@@ -1,8 +1,20 @@
+import './Button.css'
 
-
-const Button = () => {
+const Button = ({onClick , text , active ,className}) => {
   return (
-    <div>Button</div>
+    <div className="button-component-div" > 
+      
+        <button 
+          className={`custom-button ${active ? 'active':''} ${className}`}
+          onClick={onClick}
+        >
+
+          {text}
+        </button>
+        
+        
+
+    </div>
   )
 }
 
