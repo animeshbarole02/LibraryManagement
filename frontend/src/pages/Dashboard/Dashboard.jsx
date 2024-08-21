@@ -1,40 +1,77 @@
+import "./Dashboard.css";
+import Navbar from "../../components/Navbar/Navbar";
+import SideBar from "../../components/SideBar/SideBar";
+import Card from "../../components/Card/Card";
 
-import './Dashboard.css'
-import Navbar, {} from '../../components/Navbar/Navbar'
-import SideBar from '../../components/SideBar/SideBar'
-import Card from '../../components/Card/Card'
+import Reading from "../../assets/icons/girl-reading-book-concept-free-vector.jpg";
+import Books from "../../assets/icons/Books.png";
+import TakeAway from "../../assets/icons/Takeaway.png";
+import TotalUsers from "../../assets/icons/TotalUsers.png";
 const Dashboard = () => {
-
-    const handleClick = (cardType) => {
-      console.log(`${cardType} card clicked`);
-    };
+  const handleClick = (cardType) => {
+    console.log(`${cardType} card clicked`);
+  };
   return (
-    <div className='dashboard-div'>
-  
-         <Navbar/>
-         <SideBar/>
+    <div className="dashboard-div">
+      <Navbar />
+      <SideBar />
+     
+    <div className="contains"> 
+     <div className="leftdash-div">
+      <div className="cards-div">
+        <div className="card-div">
+          <Card
+            src={Reading}
+            heading="Currently Reading"
+            count={120}
+            onClick={() => handleClick("Books")}
+          />
+        </div>
 
-      
+        <div className="card-div">
+          <Card
+            src={TakeAway}
+            heading="Reading at Home"
+            count={120}
+            onClick={() => handleClick("Books")}
+          />
+        </div>
+        <div className="card-div">
+          <Card
+            src={TotalUsers}
+            heading="Total Users"
+            count={120}
+            onClick={() => handleClick("Books")}
+          />
+        </div>
+        <div className="card-div">
+          <Card
+            className="books-card"
+            src={Books}
+            heading="Total Books Available"
+            count={120}
+            onClick={() => handleClick("Books")}
+          />
+        </div>
 
-        <div className="cards-div">
-           <div className="card-div">
-           <Card heading="Books" count={120} onClick={() => handleClick('Books')} />
+      </div>
+      </div>
+
+      <div className="rightdash-div">
+          <div className="heading">
+              <h2>Dashboard Page</h2>
           </div>
-          <div className="card-div">
-           <Card heading="Books" count={120} onClick={() => handleClick('Books')} />
-          </div>
-          <div className="card-div">
-           <Card heading="Books" count={120} onClick={() => handleClick('Books')} />
-          </div>
-          <div className="card-div">
-           <Card heading="Books" count={120} onClick={() => handleClick('Books')} />
-          </div>
-        </div>     
+          <div className="content">
 
-
-
+          <span>Hi ,  [User Name] </span>
+         <p> welcome to your personalized Readify dashboard .
+          Here, you'll find all the information you need to stay informed and engaged..</p> 
+        
+          </div>
+      </div>
+      </div> 
     </div>
-  )
-}
+  );
+};
 
-export default Dashboard
+export default Dashboard;

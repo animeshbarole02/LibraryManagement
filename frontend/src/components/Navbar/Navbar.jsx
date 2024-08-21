@@ -27,13 +27,13 @@ const Navbar = () => {
              
               
 
-              <div className="type">
-                  Dashboard
-              </div>
+            
 
                <div className="user-name">
                     
+                  
                      <img src={User} alt=''></img>
+                    
                      <p>Welcome Animesh !</p><br></br>
 
                </div>

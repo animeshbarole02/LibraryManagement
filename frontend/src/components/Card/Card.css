@@ -3,7 +3,7 @@
     background-color: #fff;
     border-radius: 8px;
     width: 20vw;
-    height: 25vh;
+    height: 35vh;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
     text-align: center;
@@ -27,4 +27,13 @@
     color: #777;
   }
 
+ .card-container img {
+    width: 10vw;
+ }
   
+
+ .books-card img {
+
+  width: 15vw;
+
+ }

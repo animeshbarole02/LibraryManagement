@@ -1,31 +1,45 @@
 .sideBar-div{
 
-    width: 20vw;
+    width: 18vw;
     height: 85vh;
   
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 5%;
+    gap: 4%;
     position: fixed;
+   
+    border-right: 2px solid  #ef8636;
+  
 
 }
 
+
+
 .item {
-    padding: 10px;
-   
+    padding: 6px;
+    width: 15vw;
+    border-radius: 8px;
+    cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color:  #f8b865;
+    color: white;
 }
 
 .item img {
-    height: 5vh;
+    height: 4vh;
     margin-right: 10%;
 }
 
-.item .item-button {
-    width: 10vw;
-    padding: 8px;
+.item-text {
+    width: 8vw;
+   
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
 }

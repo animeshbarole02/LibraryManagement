@@ -5,8 +5,11 @@
 
     margin-left: auto;
     margin-right: 0;
+    
+
   
-   
+   border-bottom:2px solid #ff7300 ;
+
     
    
 
@@ -21,8 +24,8 @@
     align-items: center;
     justify-content: center;
     height: 10vh;
-    margin: 0px 12% 0px 3%;
-    padding: 10px;
+    margin: 0% 12% 0px 3%;
+    
 
     
 }
@@ -31,10 +34,11 @@
     height: 100%;
     max-height: 8vh;
     width: auto;
+   
 }
 
-.logo-text {
-    
+.logo-text p {
+   color: white ;
 }
 
 .logo-text p {
@@ -52,39 +56,47 @@
     justify-content: space-between;
     align-items: center;
     width: 80vw;
-    padding: 12px 2%; /* Adds some padding on the left and right for spacing */
-}
 
-
-.header .type {
-    font-size: 35px;
+    font-size: 25px;
     padding: 8px;
     font-weight: 900;
-    margin-left: 1%;
-    flex-grow: 1; 
+    margin-top: 1%;
+    flex-grow: 1;  /* Adds some padding on the left and right for spacing */
 }
+
+
 
 
 .header .user-name {
-    margin: 1% 2% 0 1%; 
-    padding: 10px;
+   
+    padding: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+.header .user-name img {
+    height: 3vh;
+    margin-right: 20px;
+    
+    
+}
+
+
 /* Logout Button Section */
 .header .logout-button {
     margin-right: 2%; /* Margin to the right side for spacing */
-    margin-left: auto; /* Pushes the button to the right side */
+    margin-left: auto;
+     /* Pushes the button to the right side */
 }
 
 .header .logout-button button {
     width: 10vw;
-    padding: 10px; /* Adds some padding for the button */
+
+    padding: 12px; /* Adds some padding for the button */
     font-weight: bold; /* Makes the text inside the button bold */
     border: none;
-    background-color: #ffa411; /* Background color for the button */
+    background-color: #ff9b49; /* Background color for the button */
     color: white; /* Text color inside the button */
     cursor: pointer; /* Changes cursor to pointer on hover */
     border-radius: 5px; /* Rounds the button corners */
@@ -95,10 +107,5 @@
     background-color: #ffbb70; /* Lighter shade on hover */
 }
 
-.header .user-name img {
-    height: 4vh;
-    margin-right: 1rem;
 
-    
-    
-}
+
