@@ -12,9 +12,15 @@ const Dashboard = () => {
     console.log(`${cardType} card clicked`);
   };
   return (
+    <div>
+
+    <Navbar />
+    <SideBar />
+
     <div className="dashboard-div">
-      <Navbar />
-      <SideBar />
+    
+    
+
      
     <div className="contains"> 
      <div className="leftdash-div">
@@ -65,12 +71,14 @@ const Dashboard = () => {
 
           <span>Hi ,  Animesh </span>
          
-         <p>~Keep track of the library's activities.<br></br>~Manage users, Track book Issuances.<br></br>~Monitor overall Usage statistics in real-time.</p>
+         <p>~Keep track of the library activities.<br></br>~Manage users, Track book Issuances.<br></br>~Monitor overall Usage statistics in real-time.</p>
         
-          </div>
+        </div>
       </div>
       </div> 
     </div>
+
+    </div> 
   );
 };
 

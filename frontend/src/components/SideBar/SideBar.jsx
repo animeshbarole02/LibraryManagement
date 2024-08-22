@@ -15,6 +15,7 @@ const SideBar = () => {
   return (
     <div className='sideBar-div'>
 
+    <div className="dashboard-items-div">
 
       <div className="dashboard item" onClick={() => handleItemClick('Dashboard')}>
         <img src={Dash} alt="Dashboard Icon" className="icon" />
@@ -40,7 +41,7 @@ const SideBar = () => {
         <img src={Issuance} alt="Issuances Icon" className="icon" />
         <span className="item-text">Issuances</span>
       </div>
-      
+      </div>  
     </div>
   )
 }
