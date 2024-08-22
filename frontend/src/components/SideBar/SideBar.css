@@ -41,6 +41,8 @@
     align-items: center;
     background-color:  #f39256;
     color: white;
+    text-decoration: none;
+  
 }
 
 .item img {

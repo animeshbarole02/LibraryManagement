@@ -5,6 +5,7 @@ import List from '../../assets/icons/list.png';
 import Book from '../../assets/icons/book.png';
 import Group from '../../assets/icons/group.png';
 import Issuance from '../../assets/icons/reading.png'
+import { Link } from 'react-router-dom';
 
 const SideBar = () => {
 
@@ -17,30 +18,34 @@ const SideBar = () => {
 
     <div className="dashboard-items-div">
 
-      <div className="dashboard item" onClick={() => handleItemClick('Dashboard')}>
+       <Link to="/dashboard" className="dashboard item">
         <img src={Dash} alt="Dashboard Icon" className="icon" />
         <span className="item-text">Dashboard</span>
-      </div>
 
-      <div className="categories item" onClick={() => handleItemClick('Categories')}>
+      </Link>
+     
+
+       <Link to="/categories" className="categories item">
         <img src={List} alt="Categories Icon" className="icon" />
         <span className="item-text">Categories</span>
-      </div>
+      </Link>
 
-      <div className="books item" onClick={() => handleItemClick('Books')}>
+      <Link to="/books" className="books item">
         <img src={Book} alt="Books Icon" className="icon" />
         <span className="item-text">Books</span>
-      </div>
+      </Link>
 
-      <div className="users item" onClick={() => handleItemClick('Users')}>
+      <Link to="/users" className="users item">
+    
         <img src={Group} alt="Users Icon" className="icon" />
         <span className="item-text">Users</span>
-      </div>
+      </Link>
+   
+      <Link to="/issuances" className="issuances item">
 
-      <div className="issuances item" onClick={() => handleItemClick('Issuances')}>
         <img src={Issuance} alt="Issuances Icon" className="icon" />
         <span className="item-text">Issuances</span>
-      </div>
+      </Link>
       </div>  
     </div>
   )
