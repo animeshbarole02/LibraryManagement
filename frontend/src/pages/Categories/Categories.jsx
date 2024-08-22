@@ -2,12 +2,15 @@ import "./Categories.css";
 import Navbar from "../../components/Navbar/Navbar";
 import SideBar from "../../components/SideBar/SideBar";
 import { useState } from "react";
-import Button  from '../../components/Button/Button'
-import EditIcon from "../../assets/icons/EditIcom.png"; // Add your edit icon here
+import Button from "../../components/Button/Button";
+import EditIcon from "../../assets/icons/EditIcom.png"; 
+import LeftPageIcon from "../../assets/icons/LeftPage.png"
+import RightPageIcon from "../../assets/icons/Right-Page.png"
+
 import DeleteIcon from "../../assets/icons/DeleteIcon.png";
 import Table from "../../components/Table/Table";
 
-import SearchIcon from "../../assets/icons/magnifying-glass.png"
+import SearchIcon from "../../assets/icons/magnifying-glass.png";
 const Categories = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const categories = [
@@ -36,38 +39,35 @@ const Categories = () => {
       name: "Non-Fiction",
       description: "Books based on factual information.",
     },
-    {
-      id: 3,
-      name: "Science",
-      description: "Books that explain scientific concepts.",
-    },
-    {
-      id: 2,
-      name: "Non-Fiction",
-      description: "Books based on factual information.",
-    },
-    {
-      id: 3,
-      name: "Science",
-      description: "Books that explain scientific concepts.",
-    },
+
     // Add more categories as needed
   ];
 
-   const columns = [
-    { header: "Category ID", accessor: "id" ,width: "1%"},
-    { header: "Category Name", accessor: "name" ,width: "5%"},
-    { header: "Category Description", accessor: "description",width: "10%" },
+  const columns = [
+    { header: "ID", accessor: "id", width: "0.5%" },
+    { header: "Category Name", accessor: "name", width: "2%" },
+    { header: "Category Description", accessor: "description", width: "3%" },
     {
       header: "Actions",
-      render: (rowData) => renderActions(rowData),width: "2%"
+      render: (rowData) => renderActions(rowData),
+      width: "0.5%",
     },
   ];
 
   const renderActions = (rowData) => (
     <div className="actionicons">
-      <img src={EditIcon} alt="Edit" className="action-icon" onClick={() => handleEdit(rowData)} />
-      <img src={DeleteIcon} alt="Delete" className="action-icon" onClick={() => handleDelete(rowData)} />
+      <img
+        src={EditIcon}
+        alt="Edit"
+        className="action-icon"
+        onClick={() => handleEdit(rowData)}
+      />
+      <img
+        src={DeleteIcon}
+        alt="Delete"
+        className="action-icon"
+        onClick={() => handleDelete(rowData)}
+      />
     </div>
   );
 
@@ -81,52 +81,62 @@ const Categories = () => {
     console.log("Delete clicked for", rowData);
   };
 
-
   return (
     <>
-    <Navbar />
-    <SideBar />
-    <div className="categories-div">
-     
+      <Navbar />
+      <SideBar />
+      <div className="categories-div">
+        <div className="center-div">
+          <div className="upper-heading">
 
-      <div className="center-div">
-        <div className="upper-div">
+             <span>Categories</span> 
 
-
-       <div className="search-input-div">
-         <div className="search-icon-div">
-              <img src={SearchIcon} alt="" />
-         </div>
-
-          <div className="search-categories-div">
-            <input
-              type="text"
-              placeholder="Search categories..."
-              className="search-input"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
           </div>
-        </div> 
 
-          <div className="add-categories-div">
-                <Button
-                text="Add Categories" 
-                className="add-categories-btn"
+          <div className="upper-div">
+            <div className="search-input-div">
+              <div className="search-icon-div">
+                <img src={SearchIcon} alt="" />
+              </div>
+
+              <div className="search-categories-div">
+                <input
+                  type="text"
+                  placeholder="Search categories..."
+                  className="search-input"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
                 />
-          </div>
-        </div>
+              </div>
+            </div>
 
-        <div className="lower-div">
-        <Table
-            className="category-table"
-            data={categories}
-            columns={columns}
-           
-          />
+            <div className="add-categories-div">
+              <Button text="Add Categories" className="add-categories-btn" />
+            </div>
+          </div>
+
+          <div className="lower-div">
+            <Table
+              
+              data={categories}
+              columns={columns}
+            />
+
+            <div className="pagination-div">
+               <div className="left-pagination">
+                 <img src={LeftPageIcon} alt="" />
+               </div>
+               <div className="pagination-number">
+                    <span>1/5</span>
+               </div>
+               <div className="right-pagination">
+                 <img src={RightPageIcon} alt="" />
+               </div>
+            </div>
+          </div>
+
         </div>
       </div>
-    </div>
     </>
   );
 };

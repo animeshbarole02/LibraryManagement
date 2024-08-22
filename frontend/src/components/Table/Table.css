@@ -10,27 +10,31 @@
     width: 100%;
    
     
-    text-align: left;
+
  
 }
 
 .custom-table th {
     padding: 8px;
     border-radius: 10px;
-   
+    text-align: center; 
     border: 1px solid #ffe9c2;
 }
 .custom-table td {
   
-  padding: 5px;
-   
+  padding: 10px;
+  /* Left align the body text */
 }
+
+
 
 .custom-table th {
     background-color: #f39256; /* Header background */
     color: white; /* Header text color */
     font-weight: bold;
     text-transform: uppercase;
+=
+    
     
 }
 
@@ -44,7 +48,9 @@
 }
 
 .custom-table td {
-    color: #333; /* Text color */
+    color: #333; 
+    border-left: 1.5px solid orange;
+    border-bottom: 1.5px solid orange;/* Text color */
 }
 
 .custom-table tr td:first-child {

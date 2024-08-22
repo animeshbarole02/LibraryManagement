@@ -1,18 +1,15 @@
 import './SideBar.css';
 
-import Dash from '../../assets/icons/dashboard.png';
-import List from '../../assets/icons/list.png';
-import Book from '../../assets/icons/book.png';
-import Group from '../../assets/icons/group.png';
-import Issuance from '../../assets/icons/reading.png'
+import Dash from '../../assets/icons/Dashboard.png';
+import List from '../../assets/icons/List.png';
+import Book from '../../assets/icons/Book.png';
+import Group from '../../assets/icons/Users.png';
+import Issuance from '../../assets/icons/Issuance.png'
 import { Link } from 'react-router-dom';
 
 const SideBar = () => {
 
-  const handleItemClick = (itemName) => {
-    console.log(`${itemName} clicked`);
-   
-  };
+ 
   return (
     <div className='sideBar-div'>
 

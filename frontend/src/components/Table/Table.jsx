@@ -2,8 +2,8 @@ import "./Table.css";
 
 const Table = ({ className, data, columns }) => {
   return (
-    <div className={`table-div ${className}`}>
-      <table className={`custom-table ${className}`}>
+    <div className={`table-div `}>
+      <table className={`custom-table `}>
         <thead>
           <tr>
             {columns.map((column, index) => (
