@@ -38,13 +38,20 @@
     gap: 10%;
    
 }
+.heading h2 {
+   color:  #ffa33a; 
+}
 
 .content span {
-    font-size: 30px;
+    font-size: 25px;
+    font-weight: 600;
+   
 }
 .content p {
     font-size: 20px;
     margin-top: 10%;
+     color: #000000; ;
+    line-height: 3.0rem;
 }
 
 .rightdash-div .heading{

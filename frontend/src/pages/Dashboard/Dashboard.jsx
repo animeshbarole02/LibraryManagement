@@ -59,13 +59,13 @@ const Dashboard = () => {
 
       <div className="rightdash-div">
           <div className="heading">
-              <h2>Dashboard Page</h2>
+              <h2>Dashboard</h2>
           </div>
           <div className="content">
 
-          <span>Hi ,  [User Name] </span>
-         <p> welcome to your personalized Readify dashboard .
-          Here, you'll find all the information you need to stay informed and engaged..</p> 
+          <span>Hi ,  Animesh </span>
+         
+         <p>~Keep track of the library's activities.<br></br>~Manage users, Track book Issuances.<br></br>~Monitor overall Usage statistics in real-time.</p>
         
           </div>
       </div>

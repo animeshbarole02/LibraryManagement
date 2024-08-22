@@ -1,9 +1,15 @@
 
 import Logo from '../../assets/icons/R.png';
 import User from '../../assets/icons/user.png'
+import LogoutSwtich from "../../assets/icons/LogoutSwitch.png"
 import './Navbar.css'
 
 const Navbar = () => {
+
+  const handleLogout=  () => {
+       console.log("USer is logout");
+  };
+
   return (
     <div className="navbar-div">
 
@@ -40,9 +46,9 @@ const Navbar = () => {
     
 
                <div className="logout-button">
-                    <button>Logout</button>
-               </div>
-
+                     <img src={LogoutSwtich} alt="Logout" className="logout-icon" onClick={handleLogout} />
+                     
+                 </div>
         </div>
 
     </div>

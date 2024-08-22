@@ -85,22 +85,16 @@
 
 /* Logout Button Section */
 .header .logout-button {
-    margin-right: 2%; /* Margin to the right side for spacing */
+    margin-right: 4%; /* Margin to the right side for spacing */
     margin-left: auto;
+    
      /* Pushes the button to the right side */
 }
 
-.header .logout-button button {
-    width: 10vw;
-
-    padding: 12px; /* Adds some padding for the button */
-    font-weight: bold; /* Makes the text inside the button bold */
-    border: none;
-    background-color: #ff9b49; /* Background color for the button */
-    color: white; /* Text color inside the button */
-    cursor: pointer; /* Changes cursor to pointer on hover */
-    border-radius: 5px; /* Rounds the button corners */
-    transition: background-color 0.3s ease; /* Smooth background color transition on hover */
+.logout-icon {
+    width: 2.5vw;
+    height: 5vh;
+    cursor: pointer;
 }
 
 .header .logout-button button:hover {
