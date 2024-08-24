@@ -1,16 +1,17 @@
 import "./Categories.css";
-import Navbar from "../../components/Navbar/Navbar";
-import SideBar from "../../components/SideBar/SideBar";
+
 import { useState } from "react";
 import Button from "../../components/Button/Button";
-import EditIcon from "../../assets/icons/EditIcom.png"; 
-import LeftPageIcon from "../../assets/icons/LeftPage.png"
-import RightPageIcon from "../../assets/icons/Right-Page.png"
+import EditIcon from "../../assets/icons/EditIcom.png";
+import LeftPageIcon from "../../assets/icons/LeftPage.png";
+import RightPageIcon from "../../assets/icons/Right-Page.png";
 
 import DeleteIcon from "../../assets/icons/DeleteIcon.png";
 import Table from "../../components/Table/Table";
 
 import SearchIcon from "../../assets/icons/magnifying-glass.png";
+import AdminHOC from "../../hoc/AdminHOC";
+
 const Categories = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const categories = [
@@ -39,8 +40,6 @@ const Categories = () => {
       name: "Non-Fiction",
       description: "Books based on factual information.",
     },
-
-    // Add more categories as needed
   ];
 
   const columns = [
@@ -72,73 +71,69 @@ const Categories = () => {
   );
 
   const handleEdit = (rowData) => {
-    // Logic for editing the category
     console.log("Edit clicked for", rowData);
   };
 
   const handleDelete = (rowData) => {
-    // Logic for deleting the category
     console.log("Delete clicked for", rowData);
   };
 
   return (
     <>
-      <Navbar />
-      <SideBar />
       <div className="categories-div">
         <div className="center-div">
-          <div className="upper-heading">
-
-             <span>Categories</span> 
-
-          </div>
-
           <div className="upper-div">
-            <div className="search-input-div">
-              <div className="search-icon-div">
-                <img src={SearchIcon} alt="" />
-              </div>
-
-              <div className="search-categories-div">
-                <input
-                  type="text"
-                  placeholder="Search categories..."
-                  className="search-input"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-              </div>
+            <div className="upper-div-text">
+              <span>Categories</span>
             </div>
 
-            <div className="add-categories-div">
+            <div className="upper-div-btns">
+
+              <div className="upper-search-div">
+                <div className="search-input-div">
+                <div className="search-icon-div">
+                  <img src={SearchIcon} alt="" />
+                 </div>
+
+                 <div className="search-categories-div">
+                  <input
+                    type="text"
+                    placeholder="Search categories..."
+                    className="search-input"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                  />
+                 </div>
+                </div>
+              </div> 
+
+              <div className="add-categories-div">
               <Button text="Add Categories" className="add-categories-btn" />
+               </div>
             </div>
+
+           
           </div>
 
           <div className="lower-div">
-            <Table
-              
-              data={categories}
-              columns={columns}
-            />
+            <Table data={categories} columns={columns} />
 
             <div className="pagination-div">
-               <div className="left-pagination">
-                 <img src={LeftPageIcon} alt="" />
-               </div>
-               <div className="pagination-number">
-                    <span>1/5</span>
-               </div>
-               <div className="right-pagination">
-                 <img src={RightPageIcon} alt="" />
-               </div>
+              <div className="left-pagination">
+                <img src={LeftPageIcon} alt="" />
+              </div>
+              <div className="pagination-number">
+                <span>1/5</span>
+              </div>
+              <div className="right-pagination">
+                <img src={RightPageIcon} alt="" />
+              </div>
             </div>
           </div>
-
         </div>
       </div>
     </>
   );
 };
 
-export default Categories;
+export default AdminHOC(Categories);

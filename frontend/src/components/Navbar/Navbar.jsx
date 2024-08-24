@@ -16,7 +16,7 @@ const Navbar = () => {
         </div>
 
         <div className="logo-text">
-          <p>eadify</p>
+          <p>Readify</p>
         </div>
       </div>
 

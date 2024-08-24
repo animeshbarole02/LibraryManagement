@@ -7,6 +7,7 @@ import Reading from "../../assets/icons/girl-reading-book-concept-free-vector.jp
 import Books from "../../assets/icons/Books.png";
 import TakeAway from "../../assets/icons/Takeaway.png";
 import TotalUsers from "../../assets/icons/TotalUsers.png";
+import AdminHOC from "../../hoc/AdminHOC";
 const Dashboard = () => {
   const handleClick = (cardType) => {
     console.log(`${cardType} card clicked`);
@@ -14,8 +15,7 @@ const Dashboard = () => {
   return (
     <div>
 
-    <Navbar />
-    <SideBar />
+    
 
     <div className="dashboard-div">
     
@@ -82,4 +82,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default AdminHOC(Dashboard);

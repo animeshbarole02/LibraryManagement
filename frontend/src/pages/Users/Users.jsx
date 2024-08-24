@@ -8,6 +8,7 @@ import LeftPageIcon from "../../assets/icons/LeftPage.png";
 import RightPageIcon from "../../assets/icons/Right-Page.png";
 import AssignBook from '../../assets/icons/BookBlack.png'
 import EditIcon from "../../assets/icons/EditIcom.png";
+import AdminHOC from '../../hoc/AdminHOC';
 
 
 const Users = () => {
@@ -80,34 +81,39 @@ const Users = () => {
   
   return (
     <>
-        <Navbar />
-        <SideBar />
-
            <div className="center-div">
-        <div className="upper-heading">
-          <span>Users</span>
-        </div>
-        <div className="upper-div">
-          <div className="search-input-div">
-            <div className="search-icon-div">
-              <img src={SearchIcon} alt="" />
+           <div className="upper-div">
+            <div className="upper-div-text">
+              <span>Users</span>
             </div>
 
-            <div className="search-categories-div">
-              <input
-                type="text"
-                placeholder="Search Users..."
-                className="search-input"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-            </div>
-          </div>
+            <div className="upper-div-btns">
 
-          <div className="add-categories-div">
-            <Button text="Add User" className="add-categories-btn" />
+              <div className="upper-search-div">
+                <div className="search-input-div">
+                <div className="search-icon-div">
+                  <img src={SearchIcon} alt="" />
+                 </div>
+
+                 <div className="search-categories-div">
+                  <input
+                    type="text"
+                    placeholder="Search Users..."
+                    className="search-input"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                  />
+                 </div>
+                </div>
+              </div> 
+
+              <div className="add-categories-div">
+              <Button text="Add Users" className="add-categories-btn" />
+               </div>
+            </div>
+
+           
           </div>
-        </div>
 
         <div className="lower-div">
         <Table data={users} columns={columns} />
@@ -128,4 +134,4 @@ const Users = () => {
   )
 }
 
-export default Users
+export default AdminHOC(Users)

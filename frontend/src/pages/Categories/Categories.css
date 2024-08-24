@@ -17,7 +17,7 @@
  
 }
 
-.center-div .upper-heading {
+.center-div .upper-div-text {
     
 
     width: 10vw;
@@ -41,6 +41,12 @@
     
     
 }
+
+.upper-div-btns {
+   
+    display: flex;
+    gap: 10px;
+} 
 
 .lower-div {
    
@@ -68,7 +74,7 @@
     justify-content: center;
     align-items: center;
     border-radius: 6px;
-    width: 18vw;
+    width: 13vw;
    
     
   
@@ -96,7 +102,7 @@
 
 
 .search-categories-div .search-input {
-   width: 15vw;
+   width: 10vw;
    height: 3.5vh;
    border: none;
    outline: none;
@@ -107,8 +113,9 @@
 
 
 .add-categories-div button {
-   padding: 8px;
+   padding: 5px;
    background-color: white;
+  
 }
 
 

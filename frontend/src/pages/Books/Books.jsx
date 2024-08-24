@@ -8,6 +8,7 @@ import LeftPageIcon from "../../assets/icons/LeftPage.png";
 import RightPageIcon from "../../assets/icons/Right-Page.png";
 import EditIcon from "../../assets/icons/EditIcom.png";
 import AssignUser from "../../assets/icons/UserAsign.png";
+import AdminHOC from "../../hoc/AdminHOC";
 
 const Books = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -64,12 +65,12 @@ const Books = () => {
   ];
 
   const handleEdit = (rowData) => {
-    // Logic for editing the category
+   
     console.log("Edit clicked for", rowData);
   };
 
   const handleDelete = (rowData) => {
-    // Logic for deleting the category
+    
     console.log("Delete clicked for", rowData);
   };
 
@@ -92,34 +93,39 @@ const Books = () => {
 
   return (
     <>
-      <Navbar />
-      <SideBar />
-
       <div className="center-div">
-        <div className="upper-heading">
-          <span>Books</span>
-        </div>
-        <div className="upper-div">
-          <div className="search-input-div">
-            <div className="search-icon-div">
-              <img src={SearchIcon} alt="" />
+      <div className="upper-div">
+            <div className="upper-div-text">
+              <span>Books</span>
             </div>
 
-            <div className="search-categories-div">
-              <input
-                type="text"
-                placeholder="Search Books..."
-                className="search-input"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-            </div>
-          </div>
+            <div className="upper-div-btns">
 
-          <div className="add-categories-div">
-            <Button text="Add Books" className="add-categories-btn" />
+              <div className="upper-search-div">
+                <div className="search-input-div">
+                <div className="search-icon-div">
+                  <img src={SearchIcon} alt="" />
+                 </div>
+
+                 <div className="search-categories-div">
+                  <input
+                    type="text"
+                    placeholder="Search Books..."
+                    className="search-input"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                  />
+                 </div>
+                </div>
+              </div> 
+
+              <div className="add-categories-div">
+              <Button text="Add Books" className="add-categories-btn" />
+               </div>
+            </div>
+
+           
           </div>
-        </div>
 
         <div className="lower-div">
           <Table data={books} columns={columns} />
@@ -140,4 +146,4 @@ const Books = () => {
   );
 };
 
-export default Books;
+export default AdminHOC(Books);
