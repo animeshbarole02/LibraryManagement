@@ -1,14 +1,24 @@
 package com.nucleusTeq.backend.controllers;
 
+import com.nucleusTeq.backend.dto.LoginDTO;
 import com.nucleusTeq.backend.dto.UsersDTO;
+import com.nucleusTeq.backend.jwt.JwtUtils;
+import com.nucleusTeq.backend.jwt.LoginResponse;
 import com.nucleusTeq.backend.services.Impl.UsersServiceImp;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "api/v1/users")
@@ -18,15 +28,58 @@ public class UsersController {
 
 
     @Autowired
-    private final UsersServiceImp usersServiceImp;
+    private  UsersServiceImp usersServiceImp;
 
-    public UsersController(UsersServiceImp usersServiceImp) {
-        this.usersServiceImp = usersServiceImp;
-    }
+    @Autowired
+    private JwtUtils jwtUtils;
 
-    @PostMapping("/save")
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
+ @PostMapping("/signin")
+ public ResponseEntity<?> authenticateUser(@RequestBody LoginDTO loginDTO) {
+
+     Authentication authentication;
+
+     try {
+
+         System.out.println("In Comtroller");
+
+         authentication = authenticationManager
+                 .authenticate(new UsernamePasswordAuthenticationToken(loginDTO.getEmail(),loginDTO.getPassword()));
+
+
+
+     }catch (Exception e ) {
+
+         Map<String,Object> map =  new HashMap<>();
+         map.put("Messsage", "Bad credentials");
+         map.put("status",false);
+         return  new ResponseEntity<Object>(map,HttpStatus.NOT_FOUND);
+
+
+
+     }
+
+     SecurityContextHolder.getContext().setAuthentication(authentication);
+
+     UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+     String jwtToken = jwtUtils.generateTokenFromUsername(userDetails);
+
+     System.out.println(jwtToken);
+     LoginResponse response = new LoginResponse(jwtToken,userDetails.getUsername());
+
+     return ResponseEntity.ok(response);
+
+ }
+
+
+  @CrossOrigin
+    @PostMapping("/register")
     public ResponseEntity<String> createUser(@RequestBody UsersDTO usersDTO){
+
+        System.out.println("Create");
          String response = usersServiceImp.createUser(usersDTO);
 
         return  ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -34,6 +87,10 @@ public class UsersController {
 
     @GetMapping("/getAll")
     public ResponseEntity<List<UsersDTO>> getAllUsers() {
+
+
+
+        System.out.println("I");
         List<UsersDTO> usersList = usersServiceImp.getAllUsers();
         return ResponseEntity.status(HttpStatus.OK).body(usersList);
     }

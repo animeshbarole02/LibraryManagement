@@ -1,4 +1,4 @@
-package com.nucleusTeq.backend.jwt;
+package com.nucleusTeq.backend.dto;
 
 
 import lombok.AllArgsConstructor;
@@ -8,9 +8,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class LoginResponse {
+public class LoginDTO {
 
-    private String jwtToken;
-    private String email;
+    private  String email;
+    private  String password;
 
 }
