@@ -23,7 +23,7 @@ public class BooksDTO {
 
     private Integer quantity;
 
-    private  String imageurl;
+
 
 
 }

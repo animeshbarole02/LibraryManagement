@@ -19,6 +19,9 @@ public class CategoryDTO {
     @NotEmpty(message = "Category name cannot be Empty")
     private String name;
 
+    @NotEmpty(message = "Category Description cannot be Empty")
+    private String categoryDesc;
+
 
 
 

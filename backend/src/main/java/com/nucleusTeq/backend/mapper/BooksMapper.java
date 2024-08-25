@@ -20,7 +20,7 @@ public class BooksMapper {
           booksDTO.setAuthor(books.getAuthor());
           booksDTO.setCategoryId(books.getCategoryId());
           booksDTO.setQuantity(books.getQuantity());
-          booksDTO.setImageurl(books.getImageurl());
+
 
           return booksDTO;
 
@@ -35,7 +35,7 @@ public class BooksMapper {
         book.setAuthor(booksDTO.getAuthor());
         book.setCategoryId(booksDTO.getCategoryId());
         book.setQuantity(booksDTO.getQuantity());
-        book.setImageurl(booksDTO.getImageurl());
+
 
         return book;
 
