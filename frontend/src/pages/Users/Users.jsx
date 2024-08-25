@@ -133,7 +133,7 @@ const Users = () => {
               </div> 
 
               <div className="add-categories-div">
-              <Button text="Add Users" className="add-categories-btn" onClick={handleOpenModal} />
+              <Button text="Add User" className="add-categories-btn" onClick={handleOpenModal} />
                </div>
             </div>
 
@@ -157,6 +157,7 @@ const Users = () => {
      </div>
      <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
           <Dynamicform
+          heading="Add User"
           fields={[
             {
               name: "name",

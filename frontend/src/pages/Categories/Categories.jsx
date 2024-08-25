@@ -1,6 +1,6 @@
 import "./Categories.css";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../../components/Button/Button";
 import EditIcon from "../../assets/icons/EditIcom.png";
 import LeftPageIcon from "../../assets/icons/LeftPage.png";
@@ -17,25 +17,28 @@ import Dynamicform from "../../components/forms/dynamicform";
 const Categories = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
-  const [categories, setCategories] = useState([
-    {
-      id: 1,
-      name: "Fiction",
-      description: "Books that contain fictional stories.",
-    },
-    {
-      id: 2,
-      name: "Non-Fiction",
-      description: "Books based on factual information.",
-    },
-    {
-      id: 3,
-      name: "Science",
-      description: "Books that explain scientific concepts.",
-    },
-  ]);
+  const [categories, setCategories] = useState([]);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+
+  useEffect(()=>{
+     
+    fetchCategories();
+  },[currentPage]);
+
+  const fetchCategories = async () => {
+       const response =  await fetch(`http://localhost:8080/api/v1/categories/list?page=${currentPage}&size=5`);
+       
+       const data = await response.json();
+
+       console.log(data);
+       
+       setCategories(data.content);
+       setTotalPages(data.totalPages);
+  }
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -45,21 +48,28 @@ const Categories = () => {
     setIsModalOpen(false);
   };
 
-  const handleAddCategory = (newCategory) => {
-    if (newCategory.name && newCategory.description) {
-      const newCategoryEntry = {
-        id: categories.length + 1,
-        ...newCategory,
-      };
-      setCategories([...categories, newCategoryEntry]);
-      handleCloseModal();
+  const handleAddCategory = async (newCategory) => {
+    if (newCategory.name && newCategory.categoryDesc) {
+         const reponse =  await fetch(`http://localhost:8080/api/v1/categories/save`,{
+            method :'POST',
+            headers:{'Content-Type' : 'application/json'},
+            body : JSON.stringify([newCategory]),
+
+         });
+        
+      if(reponse.ok)
+      {
+         fetchCategories();
+         handleCloseModal();
+      }
+   
     }
   };
 
   const columns = [
     { header: "ID", accessor: "id", width: "0.5%" },
     { header: "Category Name", accessor: "name", width: "2%" },
-    { header: "Category Description", accessor: "description", width: "3%" },
+    { header: "Category Description", accessor: "categoryDesc", width: "3%" },
     {
       header: "Actions",
       render: (rowData) => renderActions(rowData),
@@ -88,8 +98,29 @@ const Categories = () => {
     console.log("Edit clicked for", rowData);
   };
 
-  const handleDelete = (rowData) => {
-    console.log("Delete clicked for", rowData);
+  const handleDelete = async (rowData) => {
+
+    const id = rowData.id;
+    const response = await fetch(`http://localhost:8080/api/v1/categories/${id}`,{
+      method :"DELETE"
+    })
+
+    if (response.ok) {
+     
+      setCategories(categories.filter((category) => category.id !== id));
+    } else {
+      console.error("Failed to delete the category", response.statusText);
+    }
+     
+  };
+
+
+  const handlePageChange = (direction) => {
+    if (direction === "prev" && currentPage > 0) {
+      setCurrentPage(currentPage - 1);
+    } else if (direction === "next" && currentPage < totalPages - 1) {
+      setCurrentPage(currentPage + 1);
+    }
   };
 
   return (
@@ -135,13 +166,21 @@ const Categories = () => {
 
             <div className="pagination-div">
               <div className="left-pagination">
-                <img src={LeftPageIcon} alt="" />
+                <img 
+                src={LeftPageIcon} 
+                alt="" 
+                onClick={() => handlePageChange("prev")}
+                />
               </div>
               <div className="pagination-number">
-                <span>1/5</span>
+              <span>{currentPage + 1}/{totalPages}</span>
               </div>
               <div className="right-pagination">
-                <img src={RightPageIcon} alt="" />
+                <img
+                 src={RightPageIcon} 
+                 alt="" 
+                 onClick={() => handlePageChange("next")}
+                 />
               </div>
             </div>
           </div>
@@ -150,6 +189,7 @@ const Categories = () => {
       {/* Modal Component */}
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
         <Dynamicform
+         heading="Add Category"
           fields={[
             {
               name: "name",
@@ -158,7 +198,7 @@ const Categories = () => {
               required: true,
             },
             {
-              name: "description",
+              name: "categoryDesc",
               type: "text",
               placeholder: "Category Description",
               required: true,

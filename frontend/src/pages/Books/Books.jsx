@@ -153,7 +153,7 @@ const Books = () => {
               </div> 
 
               <div className="add-categories-div">
-              <Button text="Add Books" className="add-categories-btn"
+              <Button text="Add Book" className="add-categories-btn"
               onClick={handleOpenModal} />
                </div>
             </div>
@@ -179,7 +179,7 @@ const Books = () => {
 
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
         <Dynamicform
-          
+           heading="Add Book"
            fields={[
             {
                name :"title",

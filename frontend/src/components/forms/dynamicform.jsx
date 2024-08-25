@@ -1,7 +1,7 @@
 import  { useState } from 'react'
 import Button from '../Button/Button';
 
-const Dynamicform = ({fields,onSubmit}) => {
+const Dynamicform = ({fields,onSubmit ,heading}) => {
 
     const [formData , setFormData] = useState({});
 
@@ -19,7 +19,7 @@ const Dynamicform = ({fields,onSubmit}) => {
     <div>
            <form onSubmit={handleSubmit}>
       <div className="modal-form-heading">
-        <h2>Add Category</h2>
+        <h2>{heading}</h2>
       </div>
 
       <div className="modal-form-input-div">
