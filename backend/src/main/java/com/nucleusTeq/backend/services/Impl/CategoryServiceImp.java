@@ -8,6 +8,9 @@ import com.nucleusTeq.backend.repositories.CategoryRepository;
 import com.nucleusTeq.backend.services.ICategoryService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -50,21 +53,18 @@ public class CategoryServiceImp implements ICategoryService {
     }
 
 
-    @Override
 
-    public String saveCategory(CategoryDTO categoryDTO) {
-
-        Category category = CategoryMapper.maptoCategory(categoryDTO);
-
-        categoryRepository.save(category);
-
-        return  "Category Added SuccessFully with ID :" + category.getId();
-    }
 
     @Override
     public String deleteCategory(Long id){
         categoryRepository.deleteById(id);
         return "Category deleted successfully with ID: " + id;
+    }
+
+    @Override
+    public Page<Category> getCategories(int page , int size) {
+        Pageable pageable = PageRequest.of(page,size);
+        return  categoryRepository.findAll(pageable);
     }
 
 

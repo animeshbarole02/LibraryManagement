@@ -5,6 +5,8 @@ package com.nucleusTeq.backend.controllers;
 import com.nucleusTeq.backend.dto.CategoryDTO;
 import com.nucleusTeq.backend.entities.Category;
 import com.nucleusTeq.backend.services.ICategoryService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -17,13 +19,12 @@ import java.util.List;
 public class CategoryController {
 
 
-    private  final ICategoryService iCategoryService;
+    @Autowired
+    private  ICategoryService iCategoryService;
 
 
-    public CategoryController(ICategoryService iCategoryService) {
-        this.iCategoryService = iCategoryService;
-    }
 
+   @CrossOrigin
     @GetMapping("/getAll")
     public ResponseEntity<List<CategoryDTO>> fetchCategories(){
 
@@ -32,7 +33,8 @@ public class CategoryController {
         return ResponseEntity.status(HttpStatus.OK).body(categoryDTOList);
     }
 
-    @PostMapping(path = "/saveAll")
+    @CrossOrigin
+    @PostMapping(path = "/save")
     public ResponseEntity<String> createCategories(@RequestBody List<CategoryDTO> categoryDTOList){
 
         String message =iCategoryService.saveCategories(categoryDTOList);
@@ -41,15 +43,20 @@ public class CategoryController {
 
     }
 
-    @PostMapping(path = "/save")
-    public  ResponseEntity<String> createCategory(@RequestBody CategoryDTO categoryDTO) {
-        String message = iCategoryService.saveCategory(categoryDTO);
-        return  ResponseEntity.status(HttpStatus.CREATED).body(message);
-    }
 
+    @CrossOrigin
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteCategory(@PathVariable Long id) {
         String message = iCategoryService.deleteCategory(id);
         return ResponseEntity.status(HttpStatus.OK).body(message);
+    }
+
+    @CrossOrigin
+    @GetMapping("/list")
+    public Page<Category> getCategories(
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size
+    ){
+       return  iCategoryService.getCategories(page,size);
     }
 }

@@ -2,6 +2,7 @@ package com.nucleusTeq.backend.controllers;
 
 import com.nucleusTeq.backend.dto.BooksDTO;
 import com.nucleusTeq.backend.services.IBooksService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,12 +14,10 @@ import java.util.List;
 public class BooksController {
 
 
-    private  final IBooksService iBooksService;
+    @Autowired
+    private IBooksService iBooksService;
 
 
-    public BooksController(IBooksService booksService) {
-        this.iBooksService = booksService;
-    }
 
     @PostMapping("/create")
     public ResponseEntity<String> createBook(@RequestBody BooksDTO booksDTO){

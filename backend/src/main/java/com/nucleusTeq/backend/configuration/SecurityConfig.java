@@ -44,8 +44,10 @@ public  class SecurityConfig  {
         http.authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
 
-                                .requestMatchers("/api/v1/books/create","/api/v1/categories/save").permitAll()
-                                .requestMatchers("/api/v1/users/register","/api/v1/users/signin").permitAll()
+                                .requestMatchers("/api/v1/users/**").permitAll()
+                                .requestMatchers("/api/v1/books/**").permitAll()
+                                .requestMatchers("/api/v1/categories/**").permitAll()
+
 
 
 

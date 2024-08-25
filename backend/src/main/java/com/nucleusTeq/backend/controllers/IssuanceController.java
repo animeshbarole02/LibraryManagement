@@ -3,6 +3,7 @@ package com.nucleusTeq.backend.controllers;
 
 import com.nucleusTeq.backend.dto.IssuanceDTO;
 import com.nucleusTeq.backend.services.IIssuanceService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,11 +15,9 @@ import java.util.List;
 @RequestMapping(value = "api/v1/issuances")
 public class IssuanceController {
 
-    private  final IIssuanceService iIssuanceService;
+    @Autowired
+    private  IIssuanceService iIssuanceService;
 
-    public IssuanceController(IIssuanceService iIssuanceService) {
-        this.iIssuanceService = iIssuanceService;
-    }
 
     @GetMapping("/getAll")
     public ResponseEntity<List<IssuanceDTO>> getAllIssuances() {
