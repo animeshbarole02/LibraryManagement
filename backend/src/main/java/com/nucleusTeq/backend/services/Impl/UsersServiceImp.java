@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -89,9 +90,18 @@ public class UsersServiceImp implements IUsersService , UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Users userInfo = usersRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with Email: " + email));
+    public UserDetails loadUserByUsername(String usernameOrPhoneNumber) throws UsernameNotFoundException {
+
+        Optional<Users> userOptional;
+
+        if(usernameOrPhoneNumber.contains("@")) {
+            userOptional = usersRepository.findByEmail(usernameOrPhoneNumber);
+        }
+        else {
+            userOptional = usersRepository.findByPhoneNumber(usernameOrPhoneNumber);
+        }
+        Users userInfo = userOptional
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with identifier: " + usernameOrPhoneNumber));
 
         return new User(userInfo.getEmail(), userInfo.getPassword(),
                 Collections.singleton(new SimpleGrantedAuthority("ROLE_" + userInfo.getRole())));

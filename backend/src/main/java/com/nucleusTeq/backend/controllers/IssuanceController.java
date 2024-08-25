@@ -51,5 +51,9 @@ public class IssuanceController {
         return  ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @GetMapping("/userHistory")
+    public  String userHistory() {
+        return  "User History only Acceccible by User";
+    }
 
 }

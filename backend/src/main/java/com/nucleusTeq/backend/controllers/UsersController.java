@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 @RestController
 @RequestMapping(value = "api/v1/users")
@@ -37,43 +38,57 @@ public class UsersController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
- @PostMapping("/signin")
- public ResponseEntity<?> authenticateUser(@RequestBody LoginDTO loginDTO) {
-
-     Authentication authentication;
-
-     try {
-
-         System.out.println("In Comtroller");
-
-         authentication = authenticationManager
-                 .authenticate(new UsernamePasswordAuthenticationToken(loginDTO.getEmail(),loginDTO.getPassword()));
-
-
-
-     }catch (Exception e ) {
-
-         Map<String,Object> map =  new HashMap<>();
-         map.put("Messsage", "Bad credentials");
-         map.put("status",false);
-         return  new ResponseEntity<Object>(map,HttpStatus.NOT_FOUND);
-
-
-
-     }
-
-     SecurityContextHolder.getContext().setAuthentication(authentication);
-
-     UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-
-     String jwtToken = jwtUtils.generateTokenFromUsername(userDetails);
-
-     System.out.println(jwtToken);
-     LoginResponse response = new LoginResponse(jwtToken,userDetails.getUsername());
-
-     return ResponseEntity.ok(response);
-
- }
+// @PostMapping("/signin")
+// public ResponseEntity<?> authenticateUser(@RequestBody LoginDTO loginDTO) {
+//
+//     Authentication authentication;
+//
+//     try {
+//
+//         System.out.println("In Comtroller");
+//
+//         if(isEmail(loginDTO.getUsernameOrPhoneNumber()))
+//         {
+//             authentication = authenticationManager
+//                     .authenticate(new UsernamePasswordAuthenticationToken(loginDTO.getUsernameOrPhoneNumber(),loginDTO.getPassword()));
+//         } else if (isPhoneNumber(loginDTO.getUsernameOrPhoneNumber())) {
+//
+//             authentication = authenticationManager.authenticate(
+//                     new UsernamePasswordAuthenticationToken(
+//                             loginDTO.getUsernameOrPhoneNumber(),
+//                             loginDTO.getPassword()
+//                     )
+//             );
+//         }else {
+//
+//             throw new Exception("Invalid login input format.");
+//
+//         }
+//
+//
+//     }catch (Exception e ) {
+//
+//         Map<String,Object> map =  new HashMap<>();
+//         map.put("Messsage", "Bad credentials");
+//         map.put("status",false);
+//         return  new ResponseEntity<Object>(map,HttpStatus.NOT_FOUND);
+//
+//
+//
+//     }
+//
+//     SecurityContextHolder.getContext().setAuthentication(authentication);
+//
+//     UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+//
+//     String jwtToken = jwtUtils.generateTokenFromUsername(userDetails);
+//
+//     System.out.println(jwtToken);
+//     LoginResponse response = new LoginResponse(jwtToken,userDetails.getUsername());
+//
+//     return ResponseEntity.ok(response);
+//
+// }
 
 
   @CrossOrigin
@@ -116,5 +131,19 @@ public class UsersController {
         String response = iUsersService.deleteUser(id);
         return  ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
+//
+//    private boolean isEmail(String input) {
+//        // Basic email validation logic
+//        return input != null && input.contains("@");
+//    }
+//
+//    private boolean isPhoneNumber(String input) {
+//        // Basic phone number validation logic
+//        return input != null && input.matches("\\d+"); // Simple check for numeric values
+//    }
+
+
+
 
 }
