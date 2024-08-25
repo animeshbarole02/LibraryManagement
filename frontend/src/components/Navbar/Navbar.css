@@ -25,7 +25,7 @@
     align-items: center;
     justify-content: center;
     height: 10vh;
-    margin: 0% 12% 0px 3%;
+    margin: 0% 12% 0px 2%;
     
     position: relative; /* Ensure z-index works */
     z-index: 2; /* Logo is above all */

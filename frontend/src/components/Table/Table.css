@@ -16,13 +16,13 @@
 
 .custom-table th {
     padding: 8px;
-    border-radius: 10px;
+
     text-align: center; 
     border: 1px solid #ffe9c2;
 }
 .custom-table td {
   
-  padding: 10px;
+  padding: 3px
   /* Left align the body text */
 }
 
@@ -33,7 +33,7 @@
     color: white; /* Header text color */
     font-weight: bold;
     text-transform: uppercase;
-=
+
     
     
 }

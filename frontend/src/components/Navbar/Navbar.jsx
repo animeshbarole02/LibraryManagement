@@ -37,9 +37,7 @@ const Navbar = () => {
               onClick={handleLogout}
             />
           </div>
-          <div className="text">
-            <span>logout</span>
-          </div>
+          
         </div>
       </div>
     </div>

@@ -9,38 +9,63 @@ import RightPageIcon from "../../assets/icons/Right-Page.png";
 import AssignBook from '../../assets/icons/BookBlack.png'
 import EditIcon from "../../assets/icons/EditIcom.png";
 import AdminHOC from '../../hoc/AdminHOC';
+import Modal from '../../components/modal/modal';
+import Dynamicform from '../../components/forms/dynamicform';
 
 
 const Users = () => {
     const [searchTerm, setSearchTerm] = useState("");
-    const users = [
-        {
-          id: 1,
-          name: "John Doe",
-          email: "john.doe@example.com",
-        },
-        {
-          id: 2,
-          name: "Jane Smith",
-          email: "jane.smith@example.com",
-        },
-        {
-          id: 3,
-          name: "Michael Brown",
-          email: "michael.brown@example.com",
-        },
-        {
-          id: 4,
-          name: "Emily Davis",
-          email: "emily.davis@example.com",
-        },
-        {
-          id: 5,
-          name: "David Wilson",
-          email: "david.wilson@example.com",
-        },
-      ];
+    const [users, setUsers] = useState([
+      {
+        id: 1,
+        name: "John Doe",
+        email: "john.doe@example.com",
+      },
+      {
+        id: 2,
+        name: "Jane Smith",
+        email: "jane.smith@example.com",
+      },
+      {
+        id: 3,
+        name: "Michael Brown",
+        email: "michael.brown@example.com",
+      },
+      {
+        id: 4,
+        name: "Emily Davis",
+        email: "emily.davis@example.com",
+      },
+      {
+        id: 5,
+        name: "David Wilson",
+        email: "david.wilson@example.com",
+      },
+    ]);
 
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const handleOpenModal = () => {
+      setIsModalOpen(true);
+    };
+  
+    const handleCloseModal = () => {
+      setIsModalOpen(false);
+    };
+  
+    const handleAddUser = (newUser) => {
+      if (newUser.name && newUser.email && newUser.phoneNumber && newUser.password) {
+        const newUserEntry = {
+          id: users.length + 1,
+          ...newUser,
+        };
+  
+        setUsers([...users, newUserEntry]);
+  
+        handleCloseModal();
+      }
+    };
+  
       const columns = [
         { header: "ID", accessor: "id", width: "2%" },
         { header: "User Name", accessor: "name", width: "3%" },
@@ -108,7 +133,7 @@ const Users = () => {
               </div> 
 
               <div className="add-categories-div">
-              <Button text="Add Users" className="add-categories-btn" />
+              <Button text="Add Users" className="add-categories-btn" onClick={handleOpenModal} />
                </div>
             </div>
 
@@ -129,7 +154,39 @@ const Users = () => {
             <img src={RightPageIcon} alt="" />
           </div>
         </div>
-      </div>
+     </div>
+     <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
+          <Dynamicform
+          fields={[
+            {
+              name: "name",
+              type: "text",
+              placeholder: "User Name",
+              required: true,
+            },
+            {
+              name: "email",
+              type: "email",
+              placeholder: "User Email",
+              required: true,
+            },
+            {
+              name: "phoneNumber",
+              type: "tel",
+              placeholder: "Phone Number",
+              required: true,
+            },
+            {
+              name: "password",
+              type: "password",
+              placeholder: "Password",
+              required: true,
+            },
+          ]}
+          onSubmit={handleAddUser}
+        />
+      </Modal>
+      
     </>
   )
 }

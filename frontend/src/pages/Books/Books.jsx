@@ -1,5 +1,3 @@
-import Navbar from "../../components/Navbar/Navbar";
-import SideBar from "../../components/SideBar/SideBar";
 import Table from "../../components/Table/Table";
 import { useState } from "react";
 import Button from "../../components/Button/Button";
@@ -9,11 +7,13 @@ import RightPageIcon from "../../assets/icons/Right-Page.png";
 import EditIcon from "../../assets/icons/EditIcom.png";
 import AssignUser from "../../assets/icons/UserAsign.png";
 import AdminHOC from "../../hoc/AdminHOC";
+import Modal from "../../components/modal/modal";
+import Dynamicform from "../../components/forms/dynamicform";
 
 const Books = () => {
   const [searchTerm, setSearchTerm] = useState("");
-
-  const books = [
+ 
+  const [books, setBooks] = useState( [
     {
       id: 1,
       title: "To Kill a Mockingbird",
@@ -49,7 +49,40 @@ const Books = () => {
       category: "Philosophy",
       quantity: 12,
     },
-  ];
+  ])
+ 
+  const [isModalOpen , setIsModalOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  // title: "The Art of War",
+  // author: "Sun Tzu",
+  // category: "Philosophy",
+  // quantity: 12,
+
+
+  const handleAddBook = (newBook) => {
+    if(newBook.title && newBook.author && newBook.category && newBook.quantity) {
+
+      const newBookEntry = {
+        id : books.length +1,
+        ...newBook,
+      }
+
+      setBooks([...books , newBookEntry]);
+
+      handleCloseModal();
+
+    }
+  };
+
+
 
   const columns = [
     { header: "ID", accessor: "id", width: "5%" },
@@ -120,7 +153,8 @@ const Books = () => {
               </div> 
 
               <div className="add-categories-div">
-              <Button text="Add Books" className="add-categories-btn" />
+              <Button text="Add Books" className="add-categories-btn"
+              onClick={handleOpenModal} />
                </div>
             </div>
 
@@ -142,6 +176,46 @@ const Books = () => {
           </div>
         </div>
       </div>
+
+      <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
+        <Dynamicform
+          
+           fields={[
+            {
+               name :"title",
+               type :"text",
+               placeholder : "Book Title",
+               required :true,
+            },
+            {
+              name: "author",
+              type: "text",
+              placeholder: "Author Name",
+              required: true,
+            },
+            {
+              name: "category",
+              type: "text",
+              placeholder: "Book Category",
+              required: true,
+            },
+            {
+              name: "quantity",
+              type: "number",
+              placeholder: "Enter Quantity",
+              required: true,
+            },
+
+          
+           
+
+
+           ]}
+           onSubmit={handleAddBook}
+        />
+
+        
+      </Modal>
     </>
   );
 };

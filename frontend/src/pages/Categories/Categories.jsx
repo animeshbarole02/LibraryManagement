@@ -11,10 +11,13 @@ import Table from "../../components/Table/Table";
 
 import SearchIcon from "../../assets/icons/magnifying-glass.png";
 import AdminHOC from "../../hoc/AdminHOC";
+import Modal from "../../components/modal/modal";
+import Dynamicform from "../../components/forms/dynamicform";
 
 const Categories = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const categories = [
+
+  const [categories, setCategories] = useState([
     {
       id: 1,
       name: "Fiction",
@@ -30,17 +33,28 @@ const Categories = () => {
       name: "Science",
       description: "Books that explain scientific concepts.",
     },
-    {
-      id: 1,
-      name: "Fiction",
-      description: "Books that contain fictional stories.",
-    },
-    {
-      id: 2,
-      name: "Non-Fiction",
-      description: "Books based on factual information.",
-    },
-  ];
+  ]);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleAddCategory = (newCategory) => {
+    if (newCategory.name && newCategory.description) {
+      const newCategoryEntry = {
+        id: categories.length + 1,
+        ...newCategory,
+      };
+      setCategories([...categories, newCategoryEntry]);
+      handleCloseModal();
+    }
+  };
 
   const columns = [
     { header: "ID", accessor: "id", width: "0.5%" },
@@ -88,31 +102,32 @@ const Categories = () => {
             </div>
 
             <div className="upper-div-btns">
-
               <div className="upper-search-div">
                 <div className="search-input-div">
-                <div className="search-icon-div">
-                  <img src={SearchIcon} alt="" />
-                 </div>
+                  <div className="search-icon-div">
+                    <img src={SearchIcon} alt="" />
+                  </div>
 
-                 <div className="search-categories-div">
-                  <input
-                    type="text"
-                    placeholder="Search categories..."
-                    className="search-input"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                  />
-                 </div>
+                  <div className="search-categories-div">
+                    <input
+                      type="text"
+                      placeholder="Search categories..."
+                      className="search-input"
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                  </div>
                 </div>
-              </div> 
+              </div>
 
               <div className="add-categories-div">
-              <Button text="Add Categories" className="add-categories-btn" />
-               </div>
+                <Button
+                  text="Add Category"
+                  className="add-categories-btn"
+                  onClick={handleOpenModal}
+                />
+              </div>
             </div>
-
-           
           </div>
 
           <div className="lower-div">
@@ -132,6 +147,27 @@ const Categories = () => {
           </div>
         </div>
       </div>
+      {/* Modal Component */}
+      <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
+        <Dynamicform
+          fields={[
+            {
+              name: "name",
+              type: "text",
+              placeholder: "Category Name",
+              required: true,
+            },
+            {
+              name: "description",
+              type: "text",
+              placeholder: "Category Description",
+              required: true,
+            },
+          ]}
+          onSubmit={handleAddCategory}
+       
+        />
+      </Modal>
     </>
   );
 };
