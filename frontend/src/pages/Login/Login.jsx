@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import LibraryLogo from "../../assets/icons/WithoutBorder.png";
 import Button from "../../components/Button/Button";
@@ -6,9 +7,58 @@ import "./Login.css";
 
 const Login = () => {
   const [isAdmin, setIsAdmin] = useState(true);
+  const [usernameOrPhoneNumber, setUsernameOrPhoneNumber] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const navigate = useNavigate(); 
 
   const handleUserTypeChange = (type) => {
     setIsAdmin(type === "ADMIN");
+
+    setUsernameOrPhoneNumber("");
+    setPassword("");
+    setError("");
+  };
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setError("");
+
+    const payload = {
+      usernameOrPhoneNumber: usernameOrPhoneNumber.trim(),
+      password: password.trim(),
+    };
+
+    try {
+      const response = await fetch(`http://localhost:8080/api/v1/signin`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        console.log("Login SucccessFull", data);
+        localStorage.setItem("token", data.jwtToken);
+
+        if (isAdmin) {
+           navigate("/dashboard");
+        } 
+        else {
+          alert("User login successful. You are not redirected as this is a user account.");
+        }
+
+      } else {
+        setError(data.message || "Login Failed , Please Try Again");
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      setError("An error occurred. Please try again later.");
+    }
+
+
+
   };
 
   return (
@@ -34,7 +84,7 @@ const Login = () => {
             </div>
 
             <div className="form">
-              <form>
+              <form onSubmit={handleLogin}>
                 <div className="form-group">
                   <label htmlFor="username">
                     {isAdmin ? "Username" : "Enter Mobile Number"}
@@ -43,11 +93,15 @@ const Login = () => {
                     type={isAdmin ? "text" : "tel"}
                     id="username"
                     name="username"
+                    value={usernameOrPhoneNumber}
+
+                    onChange={(e) => setUsernameOrPhoneNumber(e.target.value)}
                     placeholder={
                       isAdmin
                         ? "Enter your username"
                         : "Enter your mobile number"
                     }
+                    required
                   />
                 </div>
                 <div className="form-group">
@@ -56,9 +110,13 @@ const Login = () => {
                     type="password"
                     id="password"
                     name="password"
+                    value={password}
                     placeholder="Enter your password"
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
                   />
                 </div>
+                {error && <p className="error-message">{error}</p>}
                 <div className="form-group button-div">
                   <Button text="Login" className="login-btn" />
                 </div>

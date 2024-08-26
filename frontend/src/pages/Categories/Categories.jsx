@@ -30,15 +30,34 @@ const Categories = () => {
   },[currentPage]);
 
   const fetchCategories = async () => {
-       const response =  await fetch(`http://localhost:8080/api/v1/categories/list?page=${currentPage}&size=5`);
-       
-       const data = await response.json();
-
-       console.log(data);
-       
-       setCategories(data.content);
-       setTotalPages(data.totalPages);
-  }
+    const token = localStorage.getItem("token"); 
+  
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/v1/categories/list?page=${currentPage}&size=5`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`, 
+          },
+        }
+      );
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+  
+      const data = await response.json();
+      console.log(data);
+  
+      setCategories(data.content);
+      setTotalPages(data.totalPages);
+    } catch (error) {
+      console.error("Failed to fetch categories:", error);
+      // Handle the error appropriately (e.g., show a message to the user)
+    }
+  };
 
   const handleOpenModal = () => {
     setIsModalOpen(true);

@@ -2,10 +2,14 @@ import Logo from "../../assets/icons/ReadingLogo.png";
 import User from "../../assets/icons/user.png";
 import LogoutSwtich from "../../assets/icons/LogoutSwitch.png";
 import "./Navbar.css";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+
+  const navigate = useNavigate();
   const handleLogout = () => {
-    console.log("USer is logout");
+    localStorage.removeItem("token");
+     navigate("/");
   };
 
   return (
