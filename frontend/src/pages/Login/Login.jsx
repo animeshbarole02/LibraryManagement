@@ -24,11 +24,28 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
-
+   
+    const trimmedInput = usernameOrPhoneNumber.trim();
     const payload = {
-      usernameOrPhoneNumber: usernameOrPhoneNumber.trim(),
+      usernameOrPhoneNumber: trimmedInput,
       password: password.trim(),
     };
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phonePattern = /^[0-9]{10}$/; // Adjust the pattern based on your requirements
+  
+    // Validate input based on selected role
+    if (isAdmin) {
+      if (!emailPattern.test(trimmedInput)) {
+        setError("Please enter a valid email address for admin login.");
+        return;
+      }
+    } else {
+      if (!phonePattern.test(trimmedInput)) {
+        setError("Please enter a valid phone number for user login.");
+        return;
+      }
+    }
 
     try {
       const response = await fetch(`http://localhost:8080/api/v1/signin`, {

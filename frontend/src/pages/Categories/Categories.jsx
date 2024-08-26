@@ -13,51 +13,95 @@ import SearchIcon from "../../assets/icons/magnifying-glass.png";
 import AdminHOC from "../../hoc/AdminHOC";
 import Modal from "../../components/modal/modal";
 import Dynamicform from "../../components/forms/dynamicform";
+import { fetchCategories, addCategory, deleteCategory } from "../../api/categoryApi";
 
 const Categories = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const [categories, setCategories] = useState([]);
+  const[filteredCategories , setFilteredCategories] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const itemsPerPage = 5; 
+
 
   useEffect(()=>{
      
-    fetchCategories();
+    loadCategories();
   },[currentPage]);
 
-  const fetchCategories = async () => {
-    const token = localStorage.getItem("token"); 
-  
+  useEffect(() => {
+    setFilteredCategories(categories); // Initialize filtered categories with all categories
+  }, [categories]); // Run this whenever categories change
+
+
+ 
+  const loadCategories = async () => {
     try {
-      const response = await fetch(
-        `http://localhost:8080/api/v1/categories/list?page=${currentPage}&size=5`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`, 
-          },
-        }
-      );
-  
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-  
-      const data = await response.json();
-      console.log(data);
-  
-      setCategories(data.content);
+      const data = await fetchCategories(currentPage);
+      const startIndex = currentPage * itemsPerPage;
+      const transformedCategories = data.content.map((category, index) => ({
+        ...category,
+        displayId: startIndex + index + 1, 
+      }));
+      setCategories(transformedCategories);
       setTotalPages(data.totalPages);
     } catch (error) {
-      console.error("Failed to fetch categories:", error);
-      // Handle the error appropriately (e.g., show a message to the user)
+      console.error("Failed to load categories:", error);
     }
   };
+
+
+  const handleSearch =() => {
+    if(searchTerm.trim()===""){
+      setFilteredCategories(categories);
+    }else {
+      const filtered = categories.filter((category) => 
+        category.name.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredCategories(filtered);
+    }
+  };
+
+  const handleAddCategory = async (newCategory) => {
+    if (newCategory.name && newCategory.categoryDesc) {
+      try {
+
+        console.log("category");
+        await addCategory(newCategory);
+        console.log("Added Category")
+        loadCategories();
+        handleCloseModal();
+        console.log("Modal closed");
+      } catch (error) {
+        console.error("Failed to add category:", error);
+      }
+    }
+  };
+
+  const handleDelete = async (rowData) => {
+    const id = rowData.id;
+    try {
+      await deleteCategory(id);
+      setCategories(categories.filter((category) => category.id !== id));
+    } catch (error) {
+      console.error("Failed to delete the category", error);
+    }
+  };
+
+  
+  const handlePageChange = (direction) => {
+    if (direction === "prev" && currentPage > 0) {
+      setCurrentPage(currentPage - 1);
+    } else if (direction === "next" && currentPage < totalPages - 1) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -67,26 +111,10 @@ const Categories = () => {
     setIsModalOpen(false);
   };
 
-  const handleAddCategory = async (newCategory) => {
-    if (newCategory.name && newCategory.categoryDesc) {
-         const reponse =  await fetch(`http://localhost:8080/api/v1/categories/save`,{
-            method :'POST',
-            headers:{'Content-Type' : 'application/json'},
-            body : JSON.stringify([newCategory]),
-
-         });
-        
-      if(reponse.ok)
-      {
-         fetchCategories();
-         handleCloseModal();
-      }
-   
-    }
-  };
+  
 
   const columns = [
-    { header: "ID", accessor: "id", width: "0.5%" },
+    { header: "ID", accessor: "displayId", width: "0.5%" },
     { header: "Category Name", accessor: "name", width: "2%" },
     { header: "Category Description", accessor: "categoryDesc", width: "3%" },
     {
@@ -117,30 +145,13 @@ const Categories = () => {
     console.log("Edit clicked for", rowData);
   };
 
-  const handleDelete = async (rowData) => {
-
-    const id = rowData.id;
-    const response = await fetch(`http://localhost:8080/api/v1/categories/${id}`,{
-      method :"DELETE"
-    })
-
-    if (response.ok) {
-     
-      setCategories(categories.filter((category) => category.id !== id));
-    } else {
-      console.error("Failed to delete the category", response.statusText);
-    }
-     
-  };
-
-
-  const handlePageChange = (direction) => {
-    if (direction === "prev" && currentPage > 0) {
-      setCurrentPage(currentPage - 1);
-    } else if (direction === "next" && currentPage < totalPages - 1) {
-      setCurrentPage(currentPage + 1);
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      handleSearch(); // Trigger search when Enter key is pressed
     }
   };
+
+
 
   return (
     <>
@@ -165,6 +176,7 @@ const Categories = () => {
                       className="search-input"
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
+                      onKeyDown={handleKeyDown}
                     />
                   </div>
                 </div>
@@ -181,7 +193,7 @@ const Categories = () => {
           </div>
 
           <div className="lower-div">
-            <Table data={categories} columns={columns} />
+            <Table data={filteredCategories} columns={columns} />
 
             <div className="pagination-div">
               <div className="left-pagination">
