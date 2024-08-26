@@ -27,12 +27,18 @@ public class BooksServiceImp implements IBooksService {
 
 
     @Override
-    public  String createBook(BooksDTO booksDTO){
+    public  String createBook(List<BooksDTO> booksDTOList){
 
-        Books book = BooksMapper.mapToBooks(booksDTO);
-        booksRepository.save(book);
+        List<Books> books = new ArrayList<>();
 
-       return  "Book Added SuccessFully with ID :" + book.getId() ;
+        booksDTOList.forEach(booksDTO -> {
+            books.add(BooksMapper.mapToBooks(booksDTO));
+        });
+
+        List<Books> savedBooks = booksRepository.saveAll(books);
+
+
+       return savedBooks.size() + "Book Added SuccessFully" ;
     }
 
 

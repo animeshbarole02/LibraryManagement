@@ -18,11 +18,11 @@ public class BooksController {
     private IBooksService iBooksService;
 
 
-
+    @CrossOrigin
     @PostMapping("/create")
-    public ResponseEntity<String> createBook(@RequestBody BooksDTO booksDTO){
+    public ResponseEntity<String> createBook(@RequestBody List<BooksDTO> booksDTOList){
 
-        String message = iBooksService.createBook(booksDTO);
+        String message = iBooksService.createBook(booksDTOList);
 
         return  ResponseEntity.status(HttpStatus.CREATED).body(message);
 

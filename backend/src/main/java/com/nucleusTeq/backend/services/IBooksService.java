@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface IBooksService {
 
-      String createBook(BooksDTO booksDTO);
+      String createBook(List<BooksDTO> booksDTOList);
 
       String deleteBook(Long id);
 
