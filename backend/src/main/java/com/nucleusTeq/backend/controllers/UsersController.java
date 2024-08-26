@@ -38,60 +38,9 @@ public class UsersController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-// @PostMapping("/signin")
-// public ResponseEntity<?> authenticateUser(@RequestBody LoginDTO loginDTO) {
-//
-//     Authentication authentication;
-//
-//     try {
-//
-//         System.out.println("In Comtroller");
-//
-//         if(isEmail(loginDTO.getUsernameOrPhoneNumber()))
-//         {
-//             authentication = authenticationManager
-//                     .authenticate(new UsernamePasswordAuthenticationToken(loginDTO.getUsernameOrPhoneNumber(),loginDTO.getPassword()));
-//         } else if (isPhoneNumber(loginDTO.getUsernameOrPhoneNumber())) {
-//
-//             authentication = authenticationManager.authenticate(
-//                     new UsernamePasswordAuthenticationToken(
-//                             loginDTO.getUsernameOrPhoneNumber(),
-//                             loginDTO.getPassword()
-//                     )
-//             );
-//         }else {
-//
-//             throw new Exception("Invalid login input format.");
-//
-//         }
-//
-//
-//     }catch (Exception e ) {
-//
-//         Map<String,Object> map =  new HashMap<>();
-//         map.put("Messsage", "Bad credentials");
-//         map.put("status",false);
-//         return  new ResponseEntity<Object>(map,HttpStatus.NOT_FOUND);
-//
-//
-//
-//     }
-//
-//     SecurityContextHolder.getContext().setAuthentication(authentication);
-//
-//     UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-//
-//     String jwtToken = jwtUtils.generateTokenFromUsername(userDetails);
-//
-//     System.out.println(jwtToken);
-//     LoginResponse response = new LoginResponse(jwtToken,userDetails.getUsername());
-//
-//     return ResponseEntity.ok(response);
-//
-// }
 
 
-  @CrossOrigin
+    @CrossOrigin
     @PostMapping("/register")
     public ResponseEntity<String> createUser(@RequestBody UsersDTO usersDTO){
 
