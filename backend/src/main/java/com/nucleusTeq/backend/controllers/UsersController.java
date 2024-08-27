@@ -3,7 +3,6 @@ package com.nucleusTeq.backend.controllers;
 import com.nucleusTeq.backend.dto.LoginDTO;
 import com.nucleusTeq.backend.dto.UsersDTO;
 import com.nucleusTeq.backend.jwt.JwtUtils;
-import com.nucleusTeq.backend.jwt.LoginResponse;
 import com.nucleusTeq.backend.services.IUsersService;
 import com.nucleusTeq.backend.services.Impl.UsersServiceImp;
 import lombok.AllArgsConstructor;

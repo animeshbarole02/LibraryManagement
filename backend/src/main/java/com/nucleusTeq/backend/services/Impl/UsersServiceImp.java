@@ -8,6 +8,7 @@ import com.nucleusTeq.backend.services.IUsersService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -103,8 +104,31 @@ public class UsersServiceImp implements IUsersService , UserDetailsService {
         Users userInfo = userOptional
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with identifier: " + usernameOrPhoneNumber));
 
-        return new User(userInfo.getEmail(), userInfo.getPassword(),
-                Collections.singleton(new SimpleGrantedAuthority("ROLE_" + userInfo.getRole())));
+//        List<GrantedAuthority> authorities = userInfo.getRole().stream()
+//                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getName()))
+//                .collect(Collectors.toList());
+
+        List<GrantedAuthority> grantedAuthorities = Collections.singletonList(new SimpleGrantedAuthority("ROLE_"+userInfo.getRole()));
+
+        return new User(userInfo.getEmail(), userInfo.getPassword(), grantedAuthorities);
+    }
+
+    @Override
+    public Users getByUserName(String name) {
+        Users user;
+        if (name.contains("@")) {
+//            email
+            user = usersRepository.findByEmail(name).orElseThrow(
+                    () -> new UsernameNotFoundException("User not found for " + name)
+            );
+        } else {
+//            mobile
+            user = usersRepository.findByPhoneNumber(name).orElseThrow(
+                    () -> new UsernameNotFoundException("User not found for " + name)
+            );
+        }
+
+        return user;
     }
 
 

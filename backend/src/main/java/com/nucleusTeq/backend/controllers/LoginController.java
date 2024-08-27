@@ -1,9 +1,11 @@
 package com.nucleusTeq.backend.controllers;
 
 import com.nucleusTeq.backend.dto.LoginDTO;
+import com.nucleusTeq.backend.entities.Users;
 import com.nucleusTeq.backend.jwt.JwtUtils;
 import com.nucleusTeq.backend.jwt.LoginResponse;
 import com.nucleusTeq.backend.services.IUsersService;
+import com.nucleusTeq.backend.services.Impl.UsersServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +28,9 @@ public class LoginController {
 
     @Autowired
     private JwtUtils jwtUtils;
+
+    @Autowired
+    UsersServiceImp usersServiceImp;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -75,10 +80,14 @@ public class LoginController {
 
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
+        String username = userDetails.getUsername();
+
+        Users user = usersServiceImp.getByUserName(username);
+
         String jwtToken = jwtUtils.generateTokenFromUsername(userDetails);
 
         System.out.println(jwtToken);
-        LoginResponse response = new LoginResponse(jwtToken,userDetails.getUsername());
+        LoginResponse response = new LoginResponse(jwtToken,userDetails.getUsername(), "ROLE_"+user.getRole(), user.getId());
 
         return ResponseEntity.ok(response);
 
