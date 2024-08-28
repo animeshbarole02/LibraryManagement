@@ -1,11 +1,13 @@
 package com.nucleusTeq.backend.controllers;
 
 import com.nucleusTeq.backend.dto.BooksDTO;
+import com.nucleusTeq.backend.entities.Books;
 import com.nucleusTeq.backend.services.IBooksService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -28,6 +30,8 @@ public class BooksController {
 
     }
 
+
+    @CrossOrigin
     @PutMapping("/update/{id}")
     public  ResponseEntity<String> updateBook(@PathVariable Long id , @RequestBody BooksDTO booksDTO) {
 
@@ -37,15 +41,20 @@ public class BooksController {
 
     }
 
+    @CrossOrigin
     @DeleteMapping("/delete/{id}")
     public  ResponseEntity<String> deleteBook(@PathVariable Long id) {
         String message = iBooksService.deleteBook(id);
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
 
-    @GetMapping("/getBooks")
-    public  ResponseEntity<List<BooksDTO>> getBooks() {
-        List<BooksDTO> booksDTOList = iBooksService.getBooks();
-        return ResponseEntity.status(HttpStatus.OK).body(booksDTOList);
+    @CrossOrigin
+    @GetMapping("/list")
+    public Page<Books> getBooks(
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size,
+            @RequestParam(value = "search", required = false) String search
+    ) {
+        return iBooksService.getBooks(page, size, search);
     }
 }

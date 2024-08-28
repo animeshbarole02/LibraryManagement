@@ -1,10 +1,11 @@
 import "./Categories.css";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Button from "../../components/Button/Button";
 import EditIcon from "../../assets/icons/EditIcom.png";
 import LeftPageIcon from "../../assets/icons/LeftPage.png";
 import RightPageIcon from "../../assets/icons/Right-Page.png";
+
 
 import DeleteIcon from "../../assets/icons/DeleteIcon.png";
 import Table from "../../components/Table/Table";
@@ -14,38 +15,45 @@ import AdminHOC from "../../hoc/AdminHOC";
 import Modal from "../../components/modal/modal";
 import Dynamicform from "../../components/forms/dynamicform";
 import { fetchCategories, addCategory, deleteCategory } from "../../api/categoryApi";
+import Tooltip from "../../components/tooltip/toolTip";
+
+ // Debounce utility function
+const debounce = (func, delay) => {
+  let timer;
+  return function (...args) {
+    clearTimeout(timer);
+    timer = setTimeout(() => func.apply(this, args), delay);
+  };
+};
 
 const Categories = () => {
   const [searchTerm, setSearchTerm] = useState("");
-
   const [categories, setCategories] = useState([]);
-  const[filteredCategories , setFilteredCategories] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
-
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const itemsPerPage = 5; 
-
-
-  useEffect(()=>{
-     
-    loadCategories();
-  },[currentPage]);
+  // Debounce function to delay search execution
+  const debounceSearch = useCallback(
+    debounce((newSearchTerm) => {
+      loadCategories(newSearchTerm);
+    }, 300), // 300ms delay
+    []
+  );
 
   useEffect(() => {
-    setFilteredCategories(categories); // Initialize filtered categories with all categories
-  }, [categories]); // Run this whenever categories change
+    loadCategories(searchTerm);
+  }, [currentPage]);
 
-
- 
-  const loadCategories = async () => {
+  // Load categories from the backend with optional search term
+  const loadCategories = async (search = "") => {
     try {
-      const data = await fetchCategories(currentPage);
-      const startIndex = currentPage * itemsPerPage;
+      const data = await fetchCategories(currentPage, 7, search);
+      
+      const startIndex = currentPage * data.size;
       const transformedCategories = data.content.map((category, index) => ({
         ...category,
-        displayId: startIndex + index + 1, 
+        displayId: startIndex + index + 1,
       }));
       setCategories(transformedCategories);
       setTotalPages(data.totalPages);
@@ -54,28 +62,18 @@ const Categories = () => {
     }
   };
 
-
-  const handleSearch =() => {
-    if(searchTerm.trim()===""){
-      setFilteredCategories(categories);
-    }else {
-      const filtered = categories.filter((category) => 
-        category.name.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-      setFilteredCategories(filtered);
-    }
+  const handleSearchInputChange = (event) => {
+    const newSearchTerm = event.target.value;
+    setSearchTerm(newSearchTerm);
+    debounceSearch(newSearchTerm); // Call the debounced search function
   };
 
   const handleAddCategory = async (newCategory) => {
     if (newCategory.name && newCategory.categoryDesc) {
       try {
-
-        console.log("category");
         await addCategory(newCategory);
-        console.log("Added Category")
         loadCategories();
         handleCloseModal();
-        console.log("Modal closed");
       } catch (error) {
         console.error("Failed to add category:", error);
       }
@@ -92,7 +90,6 @@ const Categories = () => {
     }
   };
 
-  
   const handlePageChange = (direction) => {
     if (direction === "prev" && currentPage > 0) {
       setCurrentPage(currentPage - 1);
@@ -101,8 +98,6 @@ const Categories = () => {
     }
   };
 
-
-
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
@@ -110,8 +105,6 @@ const Categories = () => {
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
-
-  
 
   const columns = [
     { header: "ID", accessor: "displayId", width: "0.5%" },
@@ -125,19 +118,26 @@ const Categories = () => {
   ];
 
   const renderActions = (rowData) => (
+
+    
     <div className="actionicons">
+      <Tooltip message="Edit"> 
+      
       <img
         src={EditIcon}
         alt="Edit"
         className="action-icon"
         onClick={() => handleEdit(rowData)}
       />
+      </Tooltip>
+      <Tooltip message="Delete"> 
       <img
         src={DeleteIcon}
         alt="Delete"
         className="action-icon"
         onClick={() => handleDelete(rowData)}
       />
+       </Tooltip>
     </div>
   );
 
@@ -145,11 +145,6 @@ const Categories = () => {
     console.log("Edit clicked for", rowData);
   };
 
-  const handleKeyDown = (event) => {
-    if (event.key === "Enter") {
-      handleSearch(); // Trigger search when Enter key is pressed
-    }
-  };
 
 
 
@@ -175,8 +170,8 @@ const Categories = () => {
                       placeholder="Search categories..."
                       className="search-input"
                       value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                      onKeyDown={handleKeyDown}
+                      onChange={handleSearchInputChange}
+                      
                     />
                   </div>
                 </div>
@@ -193,7 +188,7 @@ const Categories = () => {
           </div>
 
           <div className="lower-div">
-            <Table data={filteredCategories} columns={columns} />
+            <Table data={categories} columns={columns} />
 
             <div className="pagination-div">
               <div className="left-pagination">

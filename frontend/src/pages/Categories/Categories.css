@@ -144,7 +144,7 @@
 
   .pagination-div {
     display: flex;
-    margin-top: 6%;
+    margin-top: 4%;
     width: 100%;
     justify-content: center;
     align-items: center;
@@ -152,15 +152,35 @@
   }
 
 
+  .left-pagination {
+    margin-right: 1%;
+  }
+   
+  .right-pagination {
+    margin-left: 1%;
+  }
+
   .left-pagination img {
     height: 3vh;
+    transition: transform 0.3s ease;
     cursor: pointer;
+  }
+
+  .left-pagination img :hover {
+
+    transform: translateY(-5px);
+    
   }
 
   .right-pagination img {
     height: 3vh;
     cursor: pointer;
   }
+
+  .right-pagination img :hover {
+
+  }
+ 
 
   .pagination-number span {
     font-size: 20px;

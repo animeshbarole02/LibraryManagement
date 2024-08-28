@@ -12,6 +12,9 @@ import com.nucleusTeq.backend.services.IBooksService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -71,20 +74,16 @@ public class BooksServiceImp implements IBooksService {
 
 
     @Override
+    public Page<Books> getBooks(int page, int size, String search) {
+        Pageable pageable = PageRequest.of(page, size);
 
-    public List<BooksDTO> getBooks() {
+        if (search != null && !search.isEmpty()) {
 
-        List<Books> books =  booksRepository.findAll();
+            return booksRepository.findByTitleContainingIgnoreCaseOrAuthorContainingIgnoreCase(search, search, pageable);
+        } else {
 
-        List<BooksDTO> booksDTOList = new ArrayList<>();
-
-        books.forEach(book -> {
-            booksDTOList.add(BooksMapper.maptoBooksDTO(book));
-        });
-
-        return  booksDTOList;
+            return booksRepository.findAll(pageable);
+        }
     }
-
-
 
 }

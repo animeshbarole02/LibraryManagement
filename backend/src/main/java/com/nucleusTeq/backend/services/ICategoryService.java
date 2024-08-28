@@ -15,7 +15,12 @@ public interface ICategoryService {
 
      String saveCategories(List<CategoryDTO> categoryDTOS);
 
-     Page<Category> getCategories(int page , int size);
+     Category getCategoryById(Long id);
+
+     Category getCategoryByName(String name);
+
+     Page<Category> getCategories(int page , int size,String search);
 
      String deleteCategory(Long id);
+
 }

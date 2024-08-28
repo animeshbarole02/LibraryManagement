@@ -3,7 +3,7 @@
     display: flex;
    
 
-    margin-left: auto;
+  
     margin-right: 0;
     
    
@@ -25,7 +25,7 @@
     align-items: center;
     justify-content: center;
     height: 10vh;
-    margin: 0% 12% 0px 2%;
+    margin: 0% 5% 0px 2%;
     
     position: relative; /* Ensure z-index works */
     z-index: 2; /* Logo is above all */
@@ -57,8 +57,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 80vw;
-
+    
+   
     font-size: 25px;
     padding: 8px;
     font-weight: 900;
